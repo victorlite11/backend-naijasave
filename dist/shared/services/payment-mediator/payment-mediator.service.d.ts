@@ -1,0 +1,32 @@
+import { PaymentDto } from 'src/shared/dto/payment/payment-dto';
+import { OverseerCommissionSummary } from 'src/shared/dto/transaction/transaction-dto';
+import { IPaymentComplete, OperationFeedback, TradingBalanceTransactionPayload } from 'src/shared/interface/shared-interfaces';
+import { CommissionService } from '../commission/commission/commission.service';
+import { ContributorsService } from '../contributors/contributors.service';
+import { EntitiesMediatorService } from '../entities-mediator/entities-mediator/entities-mediator.service';
+import { PaymentTicksService } from '../payment-ticks/payment-ticks/payment-ticks.service';
+import { PaymentService } from '../payment/payment.service';
+import { ReferralService } from '../referral/referral/referral.service';
+import { RequestsService } from '../requests/requests.service';
+import { SmsMediatorService } from '../sms-mediator/sms-mediator/sms-mediator.service';
+import { TransactionsService } from '../transactions/transactions.service';
+export declare class PaymentMediatorService {
+    private entitiesMediatorService;
+    private transactionsService;
+    private paymentService;
+    private paymentTicksService;
+    private referralService;
+    private requestsService;
+    private smsMediatorService;
+    private contributorsService;
+    private commissionService;
+    constructor(entitiesMediatorService: EntitiesMediatorService, transactionsService: TransactionsService, paymentService: PaymentService, paymentTicksService: PaymentTicksService, referralService: ReferralService, requestsService: RequestsService, smsMediatorService: SmsMediatorService, contributorsService: ContributorsService, commissionService: CommissionService);
+    payCommission(op: OverseerCommissionSummary): Promise<OperationFeedback>;
+    credit(payload: PaymentDto): Promise<IPaymentComplete>;
+    debit(payload: PaymentDto): Promise<IPaymentComplete>;
+    private debitWithoutChecks;
+    private debitWithChecks;
+    fundAdminAccount(payload: TradingBalanceTransactionPayload): Promise<OperationFeedback>;
+    debitAdminAccount(payload: TradingBalanceTransactionPayload): Promise<OperationFeedback>;
+    updateTradingBalance(payload: TradingBalanceTransactionPayload): Promise<OperationFeedback>;
+}

@@ -1,0 +1,36 @@
+import { AdminDto } from 'src/modules/shared/dto/admin/admin-dto';
+import { ContributorDto } from 'src/modules/shared/dto/contributor/contributor-dto';
+import { PaymentDto } from 'src/modules/shared/dto/payment/payment-dto';
+import { OverseerCommissionSummary } from 'src/modules/shared/dto/transaction/transaction-dto';
+import { IPaymentComplete, OperationFeedback, TradingBalanceTransactionPayload } from 'src/modules/shared/interface/shared-interfaces';
+import { AccountingService } from '../accounting/accounting.service';
+import { AdminService } from '../admin/admin.service';
+import { ContributorsService } from '../contributors/contributors.service';
+import { DbMediatorService } from '../db-mediator/db-mediator.service';
+import { EntitiesMediatorService } from '../entities-mediator/entities-mediator/entities-mediator.service';
+import { QualificationService } from '../qualification/qualification.service';
+import { TransactionsService } from '../transactions/transactions.service';
+export declare class PaymentService {
+    private entitiesMediatorService;
+    private adminService;
+    private dbMediatorService;
+    private qualificationService;
+    private contributorsService;
+    private accountingService;
+    private transactionsService;
+    constructor(entitiesMediatorService: EntitiesMediatorService, adminService: AdminService, dbMediatorService: DbMediatorService, qualificationService: QualificationService, contributorsService: ContributorsService, accountingService: AccountingService, transactionsService: TransactionsService);
+    payCommission(op: OverseerCommissionSummary): Promise<OperationFeedback>;
+    credit(paymentPayload: PaymentDto): Promise<IPaymentComplete>;
+    creditDestinationAccountFromAdminAccount(paymentPayload: PaymentDto, admin?: AdminDto): Promise<IPaymentComplete>;
+    creditDestinationAccountFromContributorAccount(paymentPayload: PaymentDto, contributor?: ContributorDto): Promise<IPaymentComplete>;
+    private checkIfContributorHasPaidHisDailySavingsForTheDate;
+    debitWithChecks(paymentPayload: PaymentDto): Promise<IPaymentComplete>;
+    debitContributorWithChecks(paymentPayload: PaymentDto, contributor?: ContributorDto): Promise<IPaymentComplete>;
+    debitAdminWithChecks(paymentPayload: PaymentDto, admin?: AdminDto): Promise<IPaymentComplete>;
+    debitWithoutChecks(paymentPayload: PaymentDto): Promise<IPaymentComplete>;
+    debitContributorWithoutChecks(paymentPayload: PaymentDto, contributor?: ContributorDto): Promise<IPaymentComplete>;
+    debitAdminWithoutChecks(paymentPayload: PaymentDto, admin?: AdminDto): Promise<IPaymentComplete>;
+    fundAdminAccount(payload: TradingBalanceTransactionPayload): Promise<OperationFeedback>;
+    debitAdminAccount(payload: TradingBalanceTransactionPayload): Promise<OperationFeedback>;
+    updateTradingBalance(payload: TradingBalanceTransactionPayload): Promise<OperationFeedback>;
+}
